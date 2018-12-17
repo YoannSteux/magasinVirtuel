@@ -40,7 +40,7 @@
     var windowHalfX = window.innerWidth / 2;
     var windowHalfY = window.innerHeight / 2;
     var object;
-    var material
+    var material;
 
 
     init();
@@ -65,8 +65,12 @@
 
     animate();
     var loader = new THREE.OBJLoader( manager );
-    var nameObject = 'models/FinalBaseMesh';
+    //var nameObject = 'models//teddy_echelle_log/teddy';
+    var nameObject = 'models//teddy_echelle_classique/teddy';
 
+    var nbObjects = 10;
+
+    /*
     for (var i=0; i<10; i++)
     {
         loader.load(nameObject +  '.obj', function (obj) {
@@ -78,6 +82,7 @@
         render();
         //animate();
     }
+    */
 
     animate();
 
@@ -85,18 +90,53 @@
         console.log('updateMesh called');
         scene.remove(object);
         object = obj;
+        object.position.y = 0;
+        object.position.x = 0;
+        object.position.z = 0;
+        object.material = material;
+        object.material.color = '#ff5851';
         scene.add(object);
+
         render();
         //animate();
     }
     function onProgress( xhr ) {
         if ( xhr.lengthComputable ) {
             var percentComplete = xhr.loaded / xhr.total * 100;
-            console.log( 'model ' + Math.round( percentComplete, 2 ) + '% downloaded' );
+            //console.log( 'model ' + Math.round( percentComplete, 2 ) + '% downloaded' );
         }
     }
 
     function onError() {}
+
+
+    var index = 0;
+
+
+    var objLoader = new THREE.OBJLoader();
+
+    function loadNextFile() {
+
+        if (index > nbObjects - 1) return;
+
+        objLoader.load(nameObject + index.toString() +  '.obj', function(object) {
+
+            //scene.add(object);
+            updateMesh(object);
+            index++;
+            //sleep(3);
+            loadNextFile();
+
+        }, onProgress, onError);
+
+    }
+    loadNextFile();
+
+
+    function sleep(seconds){
+        var waitUntil = new Date().getTime() + seconds*1000;
+        while(new Date().getTime() < waitUntil) true;
+    }
 
 
 
@@ -115,7 +155,7 @@
         // material
         material = new THREE.MeshStandardMaterial( {
 
-            color: '#e242f4'    ,
+            color: '#e242f4',
 
             roughness: 0.25,
             metalness: 1,
@@ -127,10 +167,10 @@
             envMapIntensity: 0.7
 
         } );
-        material.needsUpdate = true;
+        //material.needsUpdate = true;
 
-        var geometry2 = new THREE.BoxGeometry( 5, 5, 5 );
-        var material2 = new THREE.MeshBasicMaterial( { color: '#ff6851' } );
+        var geometry2 = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
+        var material2 = new THREE.MeshBasicMaterial( { color: '#fff4f9' } );
         object = new THREE.Mesh( geometry2, material2 );
         scene.add(object);
 

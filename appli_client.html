@@ -66,9 +66,11 @@
     animate();
     var loader = new THREE.OBJLoader( manager );
     //var nameObject = 'models//teddy_echelle_log/teddy';
-    var nameObject = 'models//teddy_echelle_classique/teddy';
+    //var nameObject = 'models//teddy_echelle_classique/teddy';
+    var nameObject = 'models/vache_paslog/vache';
+    var nameObject = 'models/nefertiti/Nefertiti_';
 
-    var nbObjects = 10;
+    var nbObjects = 8;
 
     /*
     for (var i=0; i<10; i++)
@@ -110,7 +112,7 @@
     function onError() {}
 
 
-    var index = 0;
+    var index = 1;
 
 
     var objLoader = new THREE.OBJLoader();
@@ -124,7 +126,7 @@
             //scene.add(object);
             updateMesh(object);
             index++;
-            //sleep(3);
+            sleep(1);
             loadNextFile();
 
         }, onProgress, onError);
@@ -143,7 +145,7 @@
     function init() {
         container = document.createElement( 'div' );
         document.body.appendChild( container );
-        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
+        camera = new THREE.PerspectiveCamera( 100, window.innerWidth / window.innerHeight, 1, 1000 );
         camera.position.z = 50;
         // scene
         scene = new THREE.Scene();
@@ -169,7 +171,7 @@
         } );
         //material.needsUpdate = true;
 
-        var geometry2 = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
+        var geometry2 = new THREE.SphereGeometry( 0.5, 32, 32 );
         var material2 = new THREE.MeshBasicMaterial( { color: '#fff4f9' } );
         object = new THREE.Mesh( geometry2, material2 );
         scene.add(object);
